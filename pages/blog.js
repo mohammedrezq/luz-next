@@ -3,16 +3,15 @@ import React, { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import client from "../../lib/api/apollo";
+import client from "../lib/api/apollo";
 
-import { getAllPostsQuery } from "../../lib/api/getAllPostsQuery";
-import BlogContainer from "../../components/BlogContainer";
-import styles from './blog.module.scss'
+import { getAllPostsQuery } from "../lib/api/getAllPostsQuery";
+import BlogContainer from "../components/BlogContainer";
+import styles from './blog/blog.module.scss'
 import { NextSeo } from "next-seo";
 const test = ({ data: { data } }) => {
   const { posts } = data;
 
-  console.log(posts.edges.length);
   return (
     <>
     <NextSeo
