@@ -14,8 +14,6 @@ const Post = ({ post } = props) => {
   const { next } = post;
   const { previous } = post;
 
-  console.log(next);
-
   return (
     <>
       <NextSeo
