@@ -3,29 +3,35 @@ import Image from "next/image";
 import { gql } from "@apollo/client";
 import client from "../../lib/api/apollo";
 import { getPostBySlug } from "../../lib/api/getPostBySlug";
+import { NextSeo } from "next-seo";
 
 const Post = ({ post } = props) => {
-
   const { title } = post;
   const { featuredImage } = post;
   const { content } = post;
 
   return (
-    <div>
-      <h1 dangerouslySetInnerHTML={{ __html: title }} />
-      {featuredImage && (
-        <Image
-          width="350"
-          height="250"
-          layout="responsive"
-          src={featuredImage?.node?.sourceUrl}
-          blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
-          placeholder="blur"
-          loading="lazy"
-        />
-      )}
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </div>
+    <>
+      <NextSeo
+        title={`${title} - موقع لوز`}
+        description="A short description goes here."
+      />
+      <div>
+        <h1 dangerouslySetInnerHTML={{ __html: title }} />
+        {featuredImage && (
+          <Image
+            width="350"
+            height="250"
+            layout="responsive"
+            src={featuredImage?.node?.sourceUrl}
+            blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
+            placeholder="blur"
+            loading="lazy"
+          />
+        )}
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </div>
+    </>
   );
 };
 

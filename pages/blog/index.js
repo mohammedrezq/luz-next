@@ -8,10 +8,16 @@ import client from "../../lib/api/apollo";
 import { getAllPostsQuery } from "../../lib/api/getAllPostsQuery";
 import BlogContainer from "../../components/BlogContainer";
 import styles from './blog.module.scss'
+import { NextSeo } from "next-seo";
 const test = ({ data: { data } }) => {
   const { posts } = data;
 
   return (
+    <>
+    <NextSeo
+      title={`المدونة - موقع لوز`}
+      description={`مدونة المواضيع المطروحة من موقع لوز!`}
+    />
     <BlogContainer>
       {posts.edges.map((post) => {
         const { featuredImage } = post.node;
@@ -43,6 +49,7 @@ const test = ({ data: { data } }) => {
         );
       })}
     </BlogContainer>
+    </>
   );
 };
 

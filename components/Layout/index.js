@@ -7,7 +7,7 @@ import Main from "../Main";
 
 import styles from "./Layout.module.scss";
 
-const Layout = ({ children }) => {
+const Layout = (props) => {
   return (
     <>
       <NextSeo
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
       />
       <div className={styles.layout}>
         <Header />
-        <Main>{children}</Main>
+        <Main>{props.children}</Main>
         <Footer />
       </div>
     </>
