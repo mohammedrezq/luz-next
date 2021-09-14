@@ -12,6 +12,7 @@ import { NextSeo } from "next-seo";
 const test = ({ data: { data } }) => {
   const { posts } = data;
 
+  console.log(posts.edges.length);
   return (
     <>
     <NextSeo

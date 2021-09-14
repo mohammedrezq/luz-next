@@ -1,3 +1,77 @@
-// .blogContent {
-//     background-color: aqua;
-// }
+.postPagination {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+
+  .previous {
+    display: block;
+    border: 1px solid #858585;
+    padding: 2rem;
+    &:hover, &.active  {
+      border: 1px solid #000;
+      background-color: #f5e839;
+      color: #000;
+    }
+  }
+  .next {
+    display: block;
+    border: 1px solid #858585;
+    padding: 2rem;
+    &:hover, &.active  {
+      border: 1px solid #000;
+      background-color: #f5e839;
+      color: #000;
+    }
+  }
+}
+
+@media screen and(min-width: 768px) {
+  .postPagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+
+    .previous {
+      border: 1px solid #858585;
+      padding: 2rem;
+      width: 45%;
+
+      .previousUrl {
+        display: flex;
+        align-items: center;
+
+        .previousIcon {
+          font-size: 2.5rem;
+        }
+      }
+
+      &:hover, &.active {
+        border: 1px solid #000;
+        background-color: #f5e839;
+        color: #000;
+      }
+    }
+    .next {
+      border: 1px solid #858585;
+      padding: 2rem;
+      width: 45%;
+
+      .nextUrl {
+        display: flex;
+        align-items: center;
+
+        .nextIcon {
+          font-size: 2.5rem;
+        }
+      }
+
+      &:hover, &.active  {
+        border: 1px solid #000;
+        background-color: #f5e839;
+        color: #000;
+      }
+    }
+  }
+}
