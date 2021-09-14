@@ -12,7 +12,6 @@ import { NextSeo } from "next-seo";
 const test = ({ data: { data } }) => {
   const { posts } = data;
 
-  console.log(posts.edges.length);
   return (
     <>
     <NextSeo
@@ -40,7 +39,7 @@ const test = ({ data: { data } }) => {
                 )}
               </a>
             </Link>
-            <Link href={`/blog/${encodeURIComponent(post.node.slug)}`}>
+            <Link href={`/blog/${post.node.slug}`}>
               <a>
                 <h1>{post.node.title}</h1>
               </a>
