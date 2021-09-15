@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import client from "../lib/api/apollo";
+import {client} from "../services/apollo";
 
 import { getAllPostsQuery } from "../lib/api/getAllPostsQuery";
 import BlogContainer from "../components/BlogContainer";
@@ -39,7 +39,7 @@ const test = ({ data: { data } }) => {
                 )}
               </a>
             </Link>
-            <Link href={`/blog/${encodeURIComponent(post.node.slug)}`}>
+            <Link href={`/blog/${post.node.slug}`}>
               <a>
                 <h1>{post.node.title}</h1>
               </a>
