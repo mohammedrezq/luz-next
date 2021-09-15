@@ -4,6 +4,7 @@ import { gql } from "@apollo/client";
 import { NextSeo } from "next-seo";
 
 import {client} from "../../services/apollo";
+import { initializeApollo, addApolloState } from "../../services/apollo";
 import { getPostBySlug } from "../../lib/api/getPostBySlug";
 import styles from "./blog.module.scss";
 
@@ -76,7 +77,8 @@ export async function getStaticPaths() {
 }
 
 export async function getPostSlugs() {
-  const { data } = await client.query({
+  const apolloClient = initializeApollo();
+  const { data } = await apolloClient.query({
     query: gql`
       query getPosts {
         posts(first: 100000) {
@@ -92,7 +94,8 @@ export async function getPostSlugs() {
 }
 
 export async function getStaticProps(context) {
-  const { data } = await client.query({
+  const apolloClient = initializeApollo();
+  const { data } = await apolloClient.query({
     query: getPostBySlug,
     variables: {
       slug: context?.params?.slug,

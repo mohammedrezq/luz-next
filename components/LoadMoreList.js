@@ -20,7 +20,7 @@ const GET_POSTS = gql`
   }
 `;
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 3;
 
 export default function LoadMoreList() {
   const { data, loading, error, fetchMore } = useQuery(GET_POSTS, {
