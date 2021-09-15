@@ -3,7 +3,7 @@ import Link from "next/link";
 import { gql } from "@apollo/client";
 import { NextSeo } from "next-seo";
 
-import client from "../../lib/api/apollo";
+import {client} from "../../services/apollo";
 import { getPostBySlug } from "../../lib/api/getPostBySlug";
 import styles from "./blog.module.scss";
 
