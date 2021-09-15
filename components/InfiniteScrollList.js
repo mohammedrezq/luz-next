@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import Link from "next/link";
+import Image from "next/image";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const GET_POSTS = gql`
@@ -11,17 +12,29 @@ const GET_POSTS = gql`
       }
       edges {
         node {
+          title
+          uri
+          slug
           id
           databaseId
-          title
-          slug
+          featuredImage {
+            node {
+              sourceUrl
+              srcSet
+              uri
+              id
+              altText
+              caption
+            }
+          }
+          excerpt
         }
       }
     }
   }
 `;
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 3;
 
 export default function InfiniteScrollList() {
   const { data, loading, error, fetchMore } = useQuery(GET_POSTS, {
@@ -48,35 +61,54 @@ export default function InfiniteScrollList() {
   const posts = data.posts.edges.map((edge) => edge.node);
   const haveMorePosts = Boolean(data.posts?.pageInfo?.hasNextPage);
 
+  console.log(posts);
   return (
-    <ul style={{ padding: "0" }}>
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={fetchMorePosts}
-        hasMore={haveMorePosts}
-        loader={<p>Loading...</p>}
-        endMessage={<p>✅ All posts loaded.</p>}
-      >
-        {posts.map((post) => {
-          const { databaseId, title, slug } = post;
-          return (
-            <li
-              key={databaseId}
-              style={{
-                border: "2px solid #ededed",
-                borderRadius: "10px",
-                padding: "2rem",
-                listStyle: "none",
-                marginBottom: "1rem",
-              }}
-            >
-              <Link href={`/blog/${slug}`}>
-                <a>{title}</a>
-              </Link>
-            </li>
-          );
-        })}
-      </InfiniteScroll>
-    </ul>
+    <InfiniteScroll
+      dataLength={posts.length}
+      next={fetchMorePosts}
+      hasMore={haveMorePosts}
+      loader={<p>Loading...</p>}
+      endMessage={<p>✅ All posts loaded.</p>}
+    >
+      {posts.map((post) => {
+        const { databaseId, title, slug, id, uri, excerpt } =
+          post;
+        console.log(post?.featuredImage?.node?.sourceUrl);
+        return (
+          <li
+            key={databaseId}
+            style={{
+              border: "2px solid #ededed",
+              borderRadius: "10px",
+              padding: "2rem",
+              listStyle: "none",
+              marginBottom: "1rem",
+            }}
+          >
+            <Link href={`/blog/${slug}`}>
+              <a>
+                {post?.featuredImage && (
+                  <Image
+                    width="350"
+                    height="250"
+                    layout="responsive"
+                    src={post?.featuredImage?.node?.sourceUrl}
+                    blurDataURL={`/_next/image?url=${post?.featuredImage?.node?.sourceUrl}&w=16&q=1`}
+                    placeholder="blur"
+                    loading="lazy"
+                  />
+                )}
+              </a>
+            </Link>
+            <Link href={`/blog/${slug}`}>
+              <a>
+                <h1>{title}</h1>
+              </a>
+            </Link>
+            <div dangerouslySetInnerHTML={{ __html: excerpt }} />
+          </li>
+        );
+      })}
+    </InfiniteScroll>
   );
 }
