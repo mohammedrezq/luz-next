@@ -11,7 +11,7 @@ import { initializeApollo, addApolloState } from "../services/apollo";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { GET_POSTS } from "../lib/api/getPaginatedPostsQuery";
-import BlogContainer from "../components/BlogContainer";
+import PostsContainer from "../components/PostsContainer";
 import styles from "./blog/blog.module.scss";
 
 const POSTS_PER_PAGE = 6;
@@ -72,7 +72,7 @@ const Blog2 = () => {
           loader={<p>Loading...</p>}
           endMessage={null}
         >
-      <BlogContainer>
+      <PostsContainer>
           {posts.edges.map((post) => {
             const { featuredImage } = post.node;
 
@@ -102,7 +102,7 @@ const Blog2 = () => {
               </div>
             );
           })}
-      </BlogContainer>
+      </PostsContainer>
         </InfiniteScroll>
     </>
   );
