@@ -3,7 +3,7 @@ import Link from "next/link";
 import { gql } from "@apollo/client";
 import { NextSeo } from "next-seo";
 
-import {client} from "../../services/apollo";
+import { client } from "../../services/apollo";
 import { initializeApollo, addApolloState } from "../../services/apollo";
 import { getPostBySlug } from "../../lib/api/getPostBySlug";
 import styles from "./blog.module.scss";
@@ -14,6 +14,8 @@ const Post = ({ post } = props) => {
   const { content } = post;
   const { next } = post;
   const { previous } = post;
+  const { tags } = post;
+  const { categories } = post;
 
   return (
     <>
@@ -34,27 +36,57 @@ const Post = ({ post } = props) => {
             loading="lazy"
           />
         )}
+        {categories.edges &&
+          categories.edges.map((cat) => {
+            return (
+              <div key={cat.node.id}>
+                <Link href={`/category/${cat.node.slug}`}>
+                  <a>
+                    <div>{cat.node.name}</div>
+                  </a>
+                </Link>
+              </div>
+            );
+          })}
         <div dangerouslySetInnerHTML={{ __html: content }} />
+        <h1>الوسوم</h1>
+        {tags.edges && tags.edges.map((tag) => {
+          return(
+            <div key={tag.node.id}>
+              <Link href={`/tag/${tag.node.slug}`}>
+                <a>
+                  <div>{tag.node.name}</div>
+                </a>
+              </Link>
+            </div>
+          )
+        })}
       </div>
       <div className={styles.postPagination}>
         {next ? (
           <>
-          <Link href={`/blog/${next.slug}`}>
-            <a className={styles.next}>
-          <span>السابق: </span>
-              <div className={styles.nextUrl}><span className={styles.nextIcon}>&#8594;</span><span className={styles.nextTitle}>{next.title}</span></div>
-            </a>
-          </Link>
+            <Link href={`/blog/${next.slug}`}>
+              <a className={styles.next}>
+                <span>السابق: </span>
+                <div className={styles.nextUrl}>
+                  <span className={styles.nextIcon}>&#8594;</span>
+                  <span className={styles.nextTitle}>{next.title}</span>
+                </div>
+              </a>
+            </Link>
           </>
         ) : null}
         {previous ? (
           <>
-          <Link href={`/blog/${previous.slug}`}>
-            <a className={styles.previous}>
-          <span>التالي: </span>
-              <div className={styles.previousUrl}><span className={styles.previousTitle}>{previous.title}</span><span className={styles.previousIcon}>&#8592;</span>	</div>
-            </a>
-          </Link>
+            <Link href={`/blog/${previous.slug}`}>
+              <a className={styles.previous}>
+                <span>التالي: </span>
+                <div className={styles.previousUrl}>
+                  <span className={styles.previousTitle}>{previous.title}</span>
+                  <span className={styles.previousIcon}>&#8592;</span>{" "}
+                </div>
+              </a>
+            </Link>
           </>
         ) : null}
       </div>
