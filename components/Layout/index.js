@@ -15,7 +15,7 @@ const Layout = (props) => {
         description="A short description goes here."
       />
       <div className={styles.layout}>
-        <Header />
+        <Header menus={props.menus} />
         <Main>{props.children}</Main>
         <Footer />
       </div>

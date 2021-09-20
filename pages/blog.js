@@ -11,12 +11,22 @@ import { initializeApollo, addApolloState } from "../services/apollo";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { GET_POSTS } from "../lib/api/getPaginatedPostsQuery";
+import { getPrimaryMenu } from "../lib/api/getMenus";
+import { flatListToHierarchical } from "../lib/utils/menus";
 import PostsContainer from "../components/PostsContainer";
 import styles from "./blog/blog.module.scss";
+import Layout from "../components/Layout";
 
 const POSTS_PER_PAGE = 6;
 
-const Blog2 = () => {
+let $hierarchicalList = [];
+
+const Blog2 = ({ menus } = porps) => {
+
+  console.log(menus.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
+  console.log($hierarchicalList);
+
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
     variables: {
       first: POSTS_PER_PAGE,
@@ -60,7 +70,7 @@ const Blog2 = () => {
   }
 
   return (
-    <>
+    <Layout menus={$hierarchicalList}>
       <NextSeo
         title={`المدونة - موقع لوز`}
         description={`مدونة المواضيع المطروحة من موقع لوز!`}
@@ -104,7 +114,7 @@ const Blog2 = () => {
           })}
       </PostsContainer>
         </InfiniteScroll>
-    </>
+    </Layout>
   );
 };
 
@@ -121,8 +131,14 @@ export async function getStaticProps(context) {
     },
   });
 
+  const { data } = await apolloClient.query({
+    query: getPrimaryMenu,
+  });
+
   return addApolloState(apolloClient, {
-    props: {},
+    props: {
+      menus: data,
+    },
   });
 }
 
