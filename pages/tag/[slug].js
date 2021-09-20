@@ -6,55 +6,64 @@ import Link from "next/link";
 import { NextSeo } from "next-seo";
 import PostsContainer from "../../components/PostsContainer";
 
-import styles from '../blog/blog.module.scss'
+import styles from "../blog/blog.module.scss";
 
-const Category = ({ tag } = props) => {
+import { flatListToHierarchical } from "../../lib/utils/menus";
+import { getPrimaryMenu } from "../../lib/api/getMenus";
+import Layout from "../../components/Layout";
+
+let $hierarchicalList = [];
+
+const Tag = ({ tag, menus } = props) => {
   const { posts } = tag;
-//   console.log(posts);
-//   console.log(tag);
+  //   console.log(posts);
+  //   console.log(tag);
+
+  $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
+
   return (
-    <>
+    <Layout menus={$hierarchicalList}>
       <NextSeo
         title={`${tag.name}`}
         description={`${tag.description ? tag.description : tag.name}`}
       />
 
-        <PostsContainer>
-          {posts.edges.map((post) => {
-            const { featuredImage } = post.node;
+      <PostsContainer>
+        {posts.edges.map((post) => {
+          const { featuredImage } = post.node;
 
-            return (
-              <div className={styles.blogContent} key={post.node.id}>
-                <Link href={`/blog/${post.node.slug}`}>
-                  <a>
-                    {featuredImage && (
-                      <Image
-                        width="350"
-                        height="250"
-                        layout="responsive"
-                        src={featuredImage?.node?.sourceUrl}
-                        blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
-                        placeholder="blur"
-                        loading="lazy"
-                      />
-                    )}
-                  </a>
-                </Link>
-                <Link href={`/blog/${post.node.slug}`}>
-                  <a>
-                    <h1>{post.node.title}</h1>
-                  </a>
-                </Link>
-                <div dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
-              </div>
-            );
-          })}
-        </PostsContainer>
-    </>
+          return (
+            <div className={styles.blogContent} key={post.node.id}>
+              <Link href={`/blog/${post.node.slug}`}>
+                <a>
+                  {featuredImage && (
+                    <Image
+                      width="350"
+                      height="250"
+                      layout="responsive"
+                      src={featuredImage?.node?.sourceUrl}
+                      blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
+                      placeholder="blur"
+                      loading="lazy"
+                    />
+                  )}
+                </a>
+              </Link>
+              <Link href={`/blog/${post.node.slug}`}>
+                <a>
+                  <h1>{post.node.title}</h1>
+                </a>
+              </Link>
+              <div dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
+            </div>
+          );
+        })}
+      </PostsContainer>
+    </Layout>
   );
 };
 
-export default Category;
+export default Tag;
 
 export const getStaticPaths = async () => {
   const slugs = await getTagSlug();
@@ -94,9 +103,14 @@ export const getStaticProps = async (context) => {
     },
   });
 
+  const menusData = await apolloClient.query({
+    query: getPrimaryMenu,
+  });
+
   return {
     props: {
       tag: data?.tag,
+      menus: menusData,
     },
     revalidate: 10,
   };
