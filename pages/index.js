@@ -6,9 +6,7 @@ import { flatListToHierarchical } from "../lib/utils/menus";
 let $hierarchicalList = [];
 
 export default function Home({ menus } = porps) {
-  console.log(menus.menu.menuItems.nodes);
   $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
-  console.log($hierarchicalList);
   return (
     <Layout menus={$hierarchicalList}>
       <div>
@@ -25,11 +23,10 @@ export async function getStaticProps(context) {
     query: getPrimaryMenu,
   });
 
-  console.log("The Data: ", data);
-
   return {
     props: {
       menus: data,
     },
+    revalidate: 10,
   };
 }

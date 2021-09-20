@@ -17,13 +17,12 @@ const Header = (props) => {
           .includes(siteSubFolder.toLowerCase())
           ? menu?.path.replace("/newsite/", "")
           : null;
-        console.log(menu.children);
         return (
           <div key={menu.id}>
             <Link href={`/blog/${newPath}`}>{menu.label}</Link>
             {menu.children.length > 0 &&
               menu.children.map((submenu, index) => {
-                console.log(submenu);
+                // console.log(submenu);
                 return (
                   <div style={{background: "#ccc"}} key={submenu.id}>
                     <Link href={`/blog/${newPath}`}>{submenu.label}</Link>

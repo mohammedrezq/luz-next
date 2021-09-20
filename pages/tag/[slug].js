@@ -98,5 +98,6 @@ export const getStaticProps = async (context) => {
     props: {
       tag: data?.tag,
     },
+    revalidate: 10,
   };
 };

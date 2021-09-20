@@ -23,9 +23,7 @@ let $hierarchicalList = [];
 
 const Blog2 = ({ menus } = porps) => {
 
-  console.log(menus.menu.menuItems.nodes);
   $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
-  console.log($hierarchicalList);
 
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
     variables: {
@@ -139,6 +137,7 @@ export async function getStaticProps(context) {
     props: {
       menus: data,
     },
+    revalidate: 10,
   });
 }
 
