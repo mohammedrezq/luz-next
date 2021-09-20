@@ -1,35 +1,31 @@
 import { gql } from "@apollo/client";
+import { getTagBySlug } from "../../lib/api/getTagBySlug";
+import { initializeApollo } from "../../services/apollo";
 import Image from "next/image";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
-
-import { getCategoryBySlug } from "../../lib/api/getCategoryBySlug";
-import { initializeApollo } from "../../services/apollo";
-import { getPrimaryMenu } from "../../lib/api/getMenus";
-
 import PostsContainer from "../../components/PostsContainer";
-import Layout from "../../components/Layout";
 
 import styles from "../blog/blog.module.scss";
+
 import { flatListToHierarchical } from "../../lib/utils/menus";
+import { getPrimaryMenu } from "../../lib/api/getMenus";
+import Layout from "../../components/Layout";
 
 let $hierarchicalList = [];
 
-const Category = ({ category, menus } = props) => {
-  const { posts } = category;
+const Tag = ({ tag, menus } = props) => {
+  const { posts } = tag;
+  //   console.log(posts);
+  //   console.log(tag);
 
-  // console.log(menus);
   $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
 
-  //   console.log(posts);
-  //   console.log(category);
   return (
     <Layout menus={$hierarchicalList}>
       <NextSeo
-        title={`${category.name}`}
-        description={`${
-          category.description ? category.description : category.name
-        }`}
+        title={`${tag.name}`}
+        description={`${tag.description ? tag.description : tag.name}`}
       />
 
       <PostsContainer>
@@ -67,10 +63,10 @@ const Category = ({ category, menus } = props) => {
   );
 };
 
-export default Category;
+export default Tag;
 
 export const getStaticPaths = async () => {
-  const slugs = await getCategorySlug();
+  const slugs = await getTagSlug();
   const paths = slugs.map((slug) => {
     return { params: { slug } };
   });
@@ -81,12 +77,12 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getCategorySlug = async () => {
+export const getTagSlug = async () => {
   const apolloClient = initializeApollo();
   const { data } = await apolloClient.query({
     query: gql`
-      query getCategories {
-        categories(first: 10000) {
+      query getTags {
+        tags(first: 10000) {
           nodes {
             slug
           }
@@ -95,13 +91,13 @@ export const getCategorySlug = async () => {
     `,
   });
 
-  return data.categories?.nodes?.map((node) => node.slug);
+  return data.tags?.nodes?.map((node) => node.slug);
 };
 
 export const getStaticProps = async (context) => {
   const apolloClient = initializeApollo();
   const { data } = await apolloClient.query({
-    query: getCategoryBySlug,
+    query: getTagBySlug,
     variables: {
       slug: context?.params?.slug,
     },
@@ -113,7 +109,7 @@ export const getStaticProps = async (context) => {
 
   return {
     props: {
-      category: data?.category,
+      tag: data?.tag,
       menus: menusData,
     },
     revalidate: 10,

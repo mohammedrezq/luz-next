@@ -8,7 +8,13 @@ import { initializeApollo, addApolloState } from "../../services/apollo";
 import { getPostBySlug } from "../../lib/api/getPostBySlug";
 import styles from "./blog.module.scss";
 
-const Post = ({ post } = props) => {
+import { flatListToHierarchical } from "../../lib/utils/menus";
+import { getPrimaryMenu } from "../../lib/api/getMenus";
+import Layout from "../../components/Layout";
+
+let $hierarchicalList = [];
+
+const Post = ({ post, menus } = props) => {
   const { title } = post;
   const { featuredImage } = post;
   const { content } = post;
@@ -17,8 +23,10 @@ const Post = ({ post } = props) => {
   const { tags } = post;
   const { categories } = post;
 
+  $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
+
   return (
-    <>
+    <Layout menus={$hierarchicalList}>
       <NextSeo
         title={`${title} - موقع لوز`}
         description="A short description goes here."
@@ -50,17 +58,18 @@ const Post = ({ post } = props) => {
           })}
         <div dangerouslySetInnerHTML={{ __html: content }} />
         <h1>الوسوم</h1>
-        {tags.edges && tags.edges.map((tag) => {
-          return(
-            <div key={tag.node.id}>
-              <Link href={`/tag/${tag.node.slug}`}>
-                <a>
-                  <div>{tag.node.name}</div>
-                </a>
-              </Link>
-            </div>
-          )
-        })}
+        {tags.edges &&
+          tags.edges.map((tag) => {
+            return (
+              <div key={tag.node.id}>
+                <Link href={`/tag/${tag.node.slug}`}>
+                  <a>
+                    <div>{tag.node.name}</div>
+                  </a>
+                </Link>
+              </div>
+            );
+          })}
       </div>
       <div className={styles.postPagination}>
         {next ? (
@@ -90,7 +99,7 @@ const Post = ({ post } = props) => {
           </>
         ) : null}
       </div>
-    </>
+    </Layout>
   );
 };
 
@@ -134,9 +143,15 @@ export async function getStaticProps(context) {
     },
   });
 
+  const menusData = await apolloClient.query({
+    query: getPrimaryMenu,
+  });
+
   return {
     props: {
       post: data?.post,
+      menus: menusData,
     },
+    revalidate: 10,
   };
 }
