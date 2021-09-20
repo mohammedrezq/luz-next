@@ -20,21 +20,24 @@
     .menuItemHasChildren {
       display: flex;
       align-items: center;
+      justify-content: center;
+      height: 45px;
   
       .menuItemHasChildrenClosed {
         background-color: inherit;
         display: flex;
         border: none;
-        margin-left: -8px;
-        max-height: 50px;
-        padding: 5px;
-        width: 30px;
+        // margin-left: -8px;
+        min-height: 100%;
+        // padding: 5px;
+        // width: 30px;
         cursor: pointer;
         align-items: center;
   
         &:active,
-        &:hover {
-          border: 1px dashed #000;
+        &:hover, &:focus {
+        //   border: 1px dashed #000;
+        background-color: #ccc;
         }
       }
     }
@@ -70,7 +73,7 @@
       text-decoration: none;
       color: rgb(112, 112, 112);
       font-size: 1.1em;
-      padding: 0.5em;
+      padding: 0.5rem 0.2rem;
   
       @media (hover: hover) {
         &:hover {
