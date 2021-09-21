@@ -1,17 +1,21 @@
 import { useState, useEffect, useRef, forwardRef } from "react";
 import Link from "next/link";
-import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { FaSearch, FaChevronDown } from "react-icons/fa"
+;
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import ExpandMoreIcon from '@mui/material/Icon';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 import { LIST_MENU_ITEM_PRIMARY } from "../../lib/api/getMenus";
 import { initializeApollo } from "../../services/apollo";
 
 import styles from "./DropdownMobile.module.scss";
 
-const useStyles = styled((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
     },
@@ -74,8 +78,9 @@ const DropdownMobile = (props) => {
     }, [subMenu]);
 
   return (
-    <ul className={styles.navMenu}>
+    <div>
       {props.menus.map((menu, index) => {
+          console.log(menu);
         const siteSubFolder = "newsite";
         const newPath = menu?.path
           .toLowerCase()
@@ -83,15 +88,9 @@ const DropdownMobile = (props) => {
           ? menu?.path.replace("/newsite/", "")
           : null;
         return (
-          <Accordion
-            key={index}
-            className={`${classes.expanded} ${classes.backgroundColorAccordion}  ${classes.accordionBorderRadius}`}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
+            
+            <Accordion key={index} className={`${classes.expanded} ${classes.backgroundColorAccordion}  ${classes.accordionBorderRadius}`}>
+             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
               <div className={classes.heading}>
                 <Link href={`/blog/${newPath}`}>
                   <a className={classes.hrefColor} title={menu.title}>
@@ -99,50 +98,45 @@ const DropdownMobile = (props) => {
                   </a>
                 </Link>
 
-                <a
+                {/* <a
                   className={classes.hrefColor}
                   href={`/blog/${newPath}`}
                   title={menu.title}
                 //   target={target}
                 >
                   {menu.label}
-                </a>
+                </a> */}
               </div>
             </AccordionSummary>
-            <AccordionDetails
-              className={`${classes.backgroundColorAccordionDetails}`}
-            >
-              <div>
-                {props.menus.children?.length > 0 &&
-                  props.menus.children.map(({ id, path, label, title, target }) => {
-                    // const newPath = path.split('/');
-                    // const articleType = newPath.includes('articles');
-                    // const thePath = articleType ? `/${newPath[2]}/${newPath[3]}` : `/${newPath[2]}`;
-                    return (
-                      <div key={id}>
+            <AccordionDetails className={`${classes.backgroundColorAccordionDetails}`}>
+            {menu.children?.length > 0 &&
+              menu.children.map(({ id, path, label, title, target }) => {
+              
+                    console.log(title);
+                     return( <div key={id}>
                         <Link href={`/blog/${newPath}`}>
                           <a className={classes.childHrefColor} title={menu.title}>
                             {menu.label}
                           </a>
                         </Link>
 
-                        <a
+                        {/* <a
                           className={classes.childHrefColor}
                           href={`/blog/${newPath}`}
                           title={menu.title}
                         //   target={target}
                         >
                           {menu.label}
-                        </a>
-                      </div>
-                    );
-                  })}
-              </div>
+                        </a> */}
+                      </div>)
+                    {/* ); */}
+              
+                })}
             </AccordionDetails>
           </Accordion>
         );
       })}
-    </ul>
+    </div>
   );
 };
 
