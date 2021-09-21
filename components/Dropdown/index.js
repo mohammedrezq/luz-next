@@ -1,50 +1,40 @@
 import { useState, useEffect, useRef, forwardRef } from "react";
 import Link from "next/link";
-import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
-import { LIST_MENU_ITEM_PRIMARY } from "../../lib/api/getMenus";
-import { initializeApollo } from "../../services/apollo";
+import styles from './Dropdown.module.scss'
 
-import styles from "./Header.module.scss";
-import Nav from "../Nav";
-import NavMobile from "../NavMobile";
-
-const Header = (props) => {
-  // const [subMenu, setSubMenu] = useState(false);
-  // const [activeIndex, setActiveIndex] = useState(null);
-  // const subMenuRef = useRef(null);
-
-  // const openSubMenuHandler = (index) => {
-  //   setActiveIndex(index);
-  //   setSubMenu((prevState) => !prevState);
-  // };
-
-  // useEffect(() => {
-  //   const pageClickEvent = (e) => {
-  //     if (
-  //       subMenuRef.current !== null &&
-  //       !subMenuRef.current.contains(e.target)
-  //     ) {
-  //       setSubMenu(!subMenu);
-  //     }
-  //   };
-
-  //   // If the item is active (ie open) then listen for clicks
-  //   if (subMenu) {
-  //     window.addEventListener("click", pageClickEvent);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener("click", pageClickEvent);
-  //   };
-  // }, [subMenu]);
-
-  return (
-    <div className={styles.header}>
-      <h1>Header</h1>
-      <Nav menus={props.menus} />
-      <NavMobile menus={props.menus} />
-      {/* <ul className={styles.navMenu}>
+const Dropdown = (props) => {
+    const [subMenu, setSubMenu] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const subMenuRef = useRef(null);
+  
+    const openSubMenuHandler = (index) => {
+      setActiveIndex(index);
+      setSubMenu((prevState) => !prevState);
+    };
+  
+    useEffect(() => {
+      const pageClickEvent = (e) => {
+        if (
+          subMenuRef.current !== null &&
+          !subMenuRef.current.contains(e.target)
+        ) {
+          setSubMenu(!subMenu);
+        }
+      };
+  
+      // If the item is active (ie open) then listen for clicks
+      if (subMenu) {
+        window.addEventListener("click", pageClickEvent);
+      }
+  
+      return () => {
+        window.removeEventListener("click", pageClickEvent);
+      };
+    }, [subMenu]);
+    return (
+        <ul className={styles.navMenu}>
         {props.menus.map((menu, index) => {
           const siteSubFolder = "newsite";
           const newPath = menu?.path
@@ -88,9 +78,8 @@ const Header = (props) => {
             </li>
           );
         })}
-      </ul> */}
-    </div>
-  );
-};
+      </ul>
+    )
+}
 
-export default Header;
+export default Dropdown
