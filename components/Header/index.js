@@ -41,9 +41,11 @@ const Header = (props) => {
 
   return (
     <div className={styles.header}>
-      <h1>Header</h1>
-      <Nav menus={props.menus} />
       <NavMobile menus={props.menus} />
+      <div className={styles.headerTitle}>
+        <h1>موقع لوز</h1>
+      </div>
+      <Nav menus={props.menus} />
       {/* <ul className={styles.navMenu}>
         {props.menus.map((menu, index) => {
           const siteSubFolder = "newsite";

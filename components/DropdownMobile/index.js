@@ -86,11 +86,11 @@ const DropdownMobile = (props) => {
           .toLowerCase()
           .includes(siteSubFolder.toLowerCase())
           ? menu?.path.replace("/newsite/", "")
-          : null;
+          : menu.path;
         return (
             
             <Accordion key={index} className={`${classes.expanded} ${classes.backgroundColorAccordion}  ${classes.accordionBorderRadius}`}>
-             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+             <AccordionSummary expandIcon={ <ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
               <div className={classes.heading}>
                 <Link href={`/blog/${newPath}`}>
                   <a className={classes.hrefColor} title={menu.title}>
@@ -108,12 +108,17 @@ const DropdownMobile = (props) => {
                 </a> */}
               </div>
             </AccordionSummary>
-            <AccordionDetails className={`${classes.backgroundColorAccordionDetails}`}>
             {menu.children?.length > 0 &&
-              menu.children.map(({ id, path, label, title, target }) => {
-              
-                    console.log(title);
-                     return( <div key={id}>
+            <AccordionDetails className={`${classes.backgroundColorAccordionDetails}`}>
+              {menu.children.map((menu, index) => {
+                const siteSubFolder = "newsite";
+                const newPath = menu?.path
+                  .toLowerCase()
+                  .includes(siteSubFolder.toLowerCase())
+                  ? menu?.path.replace("/newsite/", "")
+                  : menu.path;
+                    console.log(menu.title);
+                     return( <div key={menu.id}>
                         <Link href={`/blog/${newPath}`}>
                           <a className={classes.childHrefColor} title={menu.title}>
                             {menu.label}
@@ -133,6 +138,7 @@ const DropdownMobile = (props) => {
               
                 })}
             </AccordionDetails>
+            }
           </Accordion>
         );
       })}

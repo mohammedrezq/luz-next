@@ -15,9 +15,9 @@
       .mobileMenu {
         background-color: #f5f5f5;
         min-width: 100vw;
-        position: absolute;
+        position: fixed;
         left: 0;
-        top: 61px;
+        top: 82px;
         z-index: 100;
         height: 100vh;
   
@@ -40,12 +40,15 @@
       }
       .HamburgerMenu {
         display: block;
-        height: 40px;
+        height: 20px;
         width: 40px;
         cursor: pointer;
+        color: #5a5a5a;
       }
       .closeMenu {
         cursor: pointer;
+        height: 20px;
+        width: 40px;
       }
       .MobileNavMenu {
         position: absolute;
@@ -64,7 +67,7 @@
   @media screen and (max-width: 479.5px) {
     .NavMenuMobile {
       .mobileMenu {
-        top: 127px;
+        top: 87px;
       }
     }
   }

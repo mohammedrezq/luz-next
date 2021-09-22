@@ -1,0 +1,26 @@
+.blogContent {
+    position: relative;
+    text-decoration: none;
+    border-radius: 8px;
+    height: 100%;
+    border: 1px solid #ddd;
+    -webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 15px;
+        transform: translateY(-8px);
+        transform: scale(1.01);
+      }
+    
+      & div {
+        border-radius: 8px 8px 0 0;
+    
+    
+    
+        & img {
+          border-radius: 8px 8px 0 0;
+        }
+    }
+}

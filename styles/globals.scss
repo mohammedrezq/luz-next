@@ -1,11 +1,36 @@
+@import './variables';
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: $font-family-default;
   height: 100%;
-  min-height: 100%;
+  overflow-x: hidden;
+  font-weight: 400;
+  line-height: 1.75;
+  
+  &.light-mode {
+    background-color: $light;
+    color: $dark;
+    transition: background-color 0.3s ease;
+  }
+  &.dark-mode {
+    background-color: $dark;
+    color: $light;
+
+    p {
+      a {
+        color: $light;
+      }
+    }
+    li {
+      a,
+      time {
+        color: $light;
+      }
+    }
+  }
 }
 
 a {

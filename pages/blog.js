@@ -14,7 +14,7 @@ import { GET_POSTS } from "../lib/api/getPaginatedPostsQuery";
 import { getPrimaryMenu } from "../lib/api/getMenus";
 import { flatListToHierarchical } from "../lib/utils/menus";
 import PostsContainer from "../components/PostsContainer";
-import styles from "./blog/blog.module.scss";
+import styles from "./blog.module.scss";
 import Layout from "../components/Layout";
 
 const POSTS_PER_PAGE = 6;

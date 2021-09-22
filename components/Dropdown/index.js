@@ -41,7 +41,7 @@ const Dropdown = (props) => {
             .toLowerCase()
             .includes(siteSubFolder.toLowerCase())
             ? menu?.path.replace("/newsite/", "")
-            : null;
+            : menu.path;
           return (
             <li key={menu.id}>
               <div className={styles.menuItemHasChildren}>
@@ -64,9 +64,15 @@ const Dropdown = (props) => {
 
               {menu.children.length > 0 && (
                 <ul  ref={subMenuRef} key={index} className={(subMenu && activeIndex === index) ? styles.navSubMenu : styles.navSubMenuClosed}>
-                  {menu.children.map(({id, path, label, title}) => {
+                  {menu.children.map((menu, index) => {
+                      const siteSubFolder = "newsite";
+                      const newPath = menu?.path
+                        .toLowerCase()
+                        .includes(siteSubFolder.toLowerCase())
+                        ? menu?.path.replace("/newsite/", "")
+                        : menu.path;
                   return (
-                    <li key={id}>
+                    <li key={menu.id}>
                         <Link href={`/blog/${newPath}`}>
                         <a title={menu.title}>{menu.label}</a>
                         </Link>
