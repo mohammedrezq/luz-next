@@ -1,3 +1,4 @@
+@import '../../styles/variables';
 /* Desktop Menu*/
 
 .navMenu {
@@ -29,7 +30,7 @@
       &:hover,
       &:focus {
         //   border: 1px dashed #000;
-        background-color: #ccc;
+        background-color: darken($yellow, 10%);
       }
     }
   }
@@ -55,21 +56,22 @@
       display: block;
       width: max-content;
       left: 8px;
+      top: 77px;
       z-index: 10;
-      background: #000000d9;
+      background: lighten($yellow, 20%);
     }
   }
 
   a {
     display: block;
     text-decoration: none;
-    color: rgb(112, 112, 112);
+    color: $dark;
     font-size: 1.1em;
     padding: 0.5rem 0.2rem;
 
     @media (hover: hover) {
       &:hover {
-        color: #0070f3;
+        color: $blue;
       }
     }
   }
@@ -80,7 +82,7 @@
   position: absolute;
   padding: 0;
   list-style: none;
-  background-color: #fff;
+  background-color: $light;
   padding: 0.5em;
   border-radius: 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -89,8 +91,9 @@
   li {
     a {
       font-size: 1rem;
+      font-weight: 600;
       padding: 0.3em;
-      color: #fff;
+      color: $dark;
 
       @media (hover: hover) {
         &:hover {
