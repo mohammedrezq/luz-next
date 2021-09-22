@@ -21,9 +21,9 @@ const NavMobile = (props) => {
   return (
     <div className={styles.NavMenuMobile}>
       {!mobileMenuActive && <GiHamburgerMenu className={styles.HamburgerMenu} onClick={mobileMenuActivateHandler} />}
-      {mobileMenuActive && <GrClose size={24} className={styles.closeMenu} onClick={mobileMenuCloseHandler} />}
       {mobileMenuActive && (
         <div className={styles.mobileMenu}>
+          {mobileMenuActive && <div className={styles.closeMobileMenu} ><GrClose size={24} className={styles.closeMenu} onClick={mobileMenuCloseHandler}/></div>}
           <DropdownMobile menus={props.menus} className={`${styles.MobileNavMenu}`} />
         </div>
       )}
