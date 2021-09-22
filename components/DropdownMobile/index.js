@@ -30,13 +30,14 @@ const useStyles = makeStyles((theme) => ({
       }
     },
     backgroundColorAccordion: {
-      backgroundColor: '#00627b',
+      backgroundColor: '#fce658',
     },
     backgroundColorAccordionDetails: {
-      backgroundColor: '#f8f8f8',
+      backgroundColor: '#fbeb86',
     },
     hrefColor: {
-      color: "#fff"
+      color: "#19191a",
+      fontWeight: "600"
     },
     childHrefColor: {
       color: "#000"
@@ -90,7 +91,7 @@ const DropdownMobile = (props) => {
         return (
             
             <Accordion key={index} className={`${classes.expanded} ${classes.backgroundColorAccordion}  ${classes.accordionBorderRadius}`}>
-             <AccordionSummary expandIcon={ <ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+             <AccordionSummary expandIcon={menu.children?.length > 0 ? <ExpandMoreIcon /> : null} aria-controls="panel1a-content" id="panel1a-header">
               <div className={classes.heading}>
                 <Link href={`/blog/${newPath}`}>
                   <a className={classes.hrefColor} title={menu.title}>
