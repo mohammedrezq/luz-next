@@ -22,7 +22,6 @@ const POSTS_PER_PAGE = 6;
 let $hierarchicalList = [];
 
 const Blog2 = ({ menus } = porps) => {
-
   $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
 
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
@@ -54,7 +53,6 @@ const Blog2 = ({ menus } = porps) => {
     });
   };
 
-  
   if (error) {
     return <p>Sorry, an error has occurred. Please reload the page.</p>;
   }
@@ -73,45 +71,57 @@ const Blog2 = ({ menus } = porps) => {
         title={`المدونة - موقع لوز`}
         description={`مدونة المواضيع المطروحة من موقع لوز!`}
       />
-        <InfiniteScroll
-          dataLength={posts.edges.length}
-          next={fetchMorePosts}
-          hasMore={haveMorePosts}
-          loader={<p>Loading...</p>}
-          endMessage={null}
-        >
-      <PostsContainer>
+      <InfiniteScroll
+        dataLength={posts.edges.length}
+        next={fetchMorePosts}
+        hasMore={haveMorePosts}
+        loader={<p>Loading...</p>}
+        endMessage={null}
+      >
+        <PostsContainer>
           {posts.edges.map((post) => {
             const { featuredImage } = post.node;
 
             return (
               <div className={styles.blogContent} key={post.node.id}>
-                <Link href={`/blog/${post.node.slug}`}>
-                  <a>
-                    {featuredImage && (
-                      <Image
-                        width="350"
-                        height="250"
-                        layout="responsive"
-                        src={featuredImage?.node?.sourceUrl}
-                        blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
-                        placeholder="blur"
-                        loading="lazy"
-                      />
-                    )}
-                  </a>
-                </Link>
-                <Link href={`/blog/${post.node.slug}`}>
-                  <a>
-                    <h1>{post.node.title}</h1>
-                  </a>
-                </Link>
-                <div dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
+                <div className={styles.blogPostImage}>
+                  <Link href={`/blog/${post.node.slug}`}>
+                    <a>
+                      {featuredImage && (
+                        <Image
+                          width="350"
+                          height="250"
+                          layout="responsive"
+                          src={featuredImage?.node?.sourceUrl}
+                          blurDataURL={`/_next/image?url=${featuredImage?.node?.sourceUrl}&w=16&q=1`}
+                          placeholder="blur"
+                          loading="lazy"
+                        />
+                      )}
+                    </a>
+                  </Link>
+                </div>
+                <div className={styles.blogPostGridContent}>
+                  <div className={styles.blogPostsDescription}>
+                    <div className={styles.blogPostTitle}>
+                      <Link href={`/blog/${post.node.slug}`}>
+                        <a>
+                          <h1>{post.node.title}</h1>
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className={styles.blogPostExcerpt}>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: post.node.excerpt }}
+                    />
+                  </div>
+                </div>
               </div>
             );
           })}
-      </PostsContainer>
-        </InfiniteScroll>
+        </PostsContainer>
+      </InfiniteScroll>
     </Layout>
   );
 };
