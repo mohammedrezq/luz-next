@@ -1,59 +1,47 @@
 import { useState, useEffect, useRef, forwardRef } from "react";
 import Link from "next/link";
-import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
-import { LIST_MENU_ITEM_PRIMARY } from "../../lib/api/getMenus";
-import { initializeApollo } from "../../services/apollo";
+import styles from './Dropdown.module.scss'
 
-import styles from "./Header.module.scss";
-import Nav from "../Nav";
-import NavMobile from "../NavMobile";
-
-const Header = (props) => {
-  // const [subMenu, setSubMenu] = useState(false);
-  // const [activeIndex, setActiveIndex] = useState(null);
-  // const subMenuRef = useRef(null);
-
-  // const openSubMenuHandler = (index) => {
-  //   setActiveIndex(index);
-  //   setSubMenu((prevState) => !prevState);
-  // };
-
-  // useEffect(() => {
-  //   const pageClickEvent = (e) => {
-  //     if (
-  //       subMenuRef.current !== null &&
-  //       !subMenuRef.current.contains(e.target)
-  //     ) {
-  //       setSubMenu(!subMenu);
-  //     }
-  //   };
-
-  //   // If the item is active (ie open) then listen for clicks
-  //   if (subMenu) {
-  //     window.addEventListener("click", pageClickEvent);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener("click", pageClickEvent);
-  //   };
-  // }, [subMenu]);
-
-  return (
-    <div className={styles.header}>
-      <NavMobile menus={props.menus} />
-      <div className={styles.headerTitle}>
-        <h1>موقع لوز</h1>
-      </div>
-      <Nav menus={props.menus} />
-      {/* <ul className={styles.navMenu}>
+const Dropdown = (props) => {
+    const [subMenu, setSubMenu] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const subMenuRef = useRef(null);
+  
+    const openSubMenuHandler = (index) => {
+      setActiveIndex(index);
+      setSubMenu((prevState) => !prevState);
+    };
+  
+    useEffect(() => {
+      const pageClickEvent = (e) => {
+        if (
+          subMenuRef.current !== null &&
+          !subMenuRef.current.contains(e.target)
+        ) {
+          setSubMenu(!subMenu);
+        }
+      };
+  
+      // If the item is active (ie open) then listen for clicks
+      if (subMenu) {
+        window.addEventListener("click", pageClickEvent);
+      }
+  
+      return () => {
+        window.removeEventListener("click", pageClickEvent);
+      };
+    }, [subMenu]);
+    return (
+        <ul className={styles.navMenu}>
         {props.menus.map((menu, index) => {
           const siteSubFolder = "newsite";
           const newPath = menu?.path
             .toLowerCase()
             .includes(siteSubFolder.toLowerCase())
             ? menu?.path.replace("/newsite/", "")
-            : null;
+            : menu.path;
           return (
             <li key={menu.id}>
               <div className={styles.menuItemHasChildren}>
@@ -76,9 +64,15 @@ const Header = (props) => {
 
               {menu.children.length > 0 && (
                 <ul  ref={subMenuRef} key={index} className={(subMenu && activeIndex === index) ? styles.navSubMenu : styles.navSubMenuClosed}>
-                  {menu.children.map(({id, path, label, title}) => {
+                  {menu.children.map((menu, index) => {
+                      const siteSubFolder = "newsite";
+                      const newPath = menu?.path
+                        .toLowerCase()
+                        .includes(siteSubFolder.toLowerCase())
+                        ? menu?.path.replace("/newsite/", "")
+                        : menu.path;
                   return (
-                    <li key={id}>
+                    <li key={menu.id}>
                         <Link href={`/blog/${newPath}`}>
                         <a title={menu.title}>{menu.label}</a>
                         </Link>
@@ -90,9 +84,8 @@ const Header = (props) => {
             </li>
           );
         })}
-      </ul> */}
-    </div>
-  );
-};
+      </ul>
+    )
+}
 
-export default Header;
+export default Dropdown
