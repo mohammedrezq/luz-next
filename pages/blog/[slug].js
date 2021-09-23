@@ -62,7 +62,7 @@ const Post = ({ post, menus } = props) => {
         </div>
         <div dangerouslySetInnerHTML={{ __html: content }} />
         <div className={styles.tagsContainer}>
-          <div className={styles.tagsHead}>الوسوم: </div>
+        {tags.edges.length > 0 &&<div className={styles.tagsHead}>الوسوم: </div>}
           {tags.edges &&
             tags.edges.map((tag, index) => {
               return [

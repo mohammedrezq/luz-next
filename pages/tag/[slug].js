@@ -28,6 +28,8 @@ const Tag = ({ tag, menus } = props) => {
         description={`${tag.description ? tag.description : tag.name}`}
       />
 
+      <h1>هذه المواضيع موسومة بـ"{tag.name}"</h1>
+
       <PostsContainer>
         {posts.edges.map((post) => {
           const { featuredImage } = post.node;
