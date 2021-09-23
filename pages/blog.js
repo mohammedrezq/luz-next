@@ -65,6 +65,8 @@ const Blog2 = ({ menus } = porps) => {
     return <p>No posts have been published.</p>;
   }
 
+  console.log(posts);
+
   return (
     <Layout menus={$hierarchicalList}>
       <NextSeo
@@ -102,6 +104,20 @@ const Blog2 = ({ menus } = porps) => {
                   </Link>
                 </div>
                 <div className={styles.blogPostGridContent}>
+                  <div className={styles.blogPostCategories}>
+                    {post.node?.categories && post.node?.categories?.edges.map((category, index) => {
+                      return (
+                        <div key={category.node.id}>
+                          <Link href={`/category/${category.node.slug}`}>
+                          <a>
+                          {/* {(index ? ', ': '') + category.node.name} */}
+                          {category.node.name}
+                          </a>
+                          </Link>
+                        </div>
+                      )
+                    })}
+                  </div>
                   <div className={styles.blogPostsDescription}>
                     <div className={styles.blogPostTitle}>
                       <Link href={`/blog/${post.node.slug}`}>
