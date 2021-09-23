@@ -105,18 +105,17 @@ const Blog2 = ({ menus } = porps) => {
                 </div>
                 <div className={styles.blogPostGridContent}>
                   <div className={styles.blogPostCategories}>
-                    {post.node?.categories && post.node?.categories?.edges.map((category, index) => {
-                      return (
-                        <div key={category.node.id}>
-                          <Link href={`/category/${category.node.slug}`}>
-                          <a>
-                          {/* {(index ? ', ': '') + category.node.name} */}
-                          {category.node.name}
-                          </a>
-                          </Link>
-                        </div>
-                      )
-                    })}
+                    {post.node?.categories &&
+                      post.node?.categories?.edges.map((category, index) => {
+                        return [
+                            (index ? ' . ' : ' '),
+                          <div  className={styles.blogPostCategoriesItems} key={category.node.id}>
+                            <Link href={`/category/${category.node.slug}`}>
+                              <a>{category.node.name}</a>
+                            </Link>
+                          </div>,
+                        ];
+                      })}
                   </div>
                   <div className={styles.blogPostsDescription}>
                     <div className={styles.blogPostTitle}>

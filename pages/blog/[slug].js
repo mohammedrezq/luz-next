@@ -47,16 +47,16 @@ const Post = ({ post, menus } = props) => {
         )}
         <div className={styles.categoryContainer}>
           {categories.edges &&
-            categories.edges.map((cat) => {
+            categories.edges.map((cat, index) => {
               return [
+                (index ? ' . ' : ' '),
                 <div className={styles.postCategories} key={cat.node.id}>
                   <Link href={`/category/${cat.node.slug}`}>
                     <a>
                       <div>{cat.node.name}</div>
                     </a>
                   </Link>
-                </div>,
-                " . ",
+                </div>
               ];
             })}
         </div>
@@ -66,12 +66,12 @@ const Post = ({ post, menus } = props) => {
           {tags.edges &&
             tags.edges.map((tag, index) => {
               return [
+                (index ? ' . ' : ' '),
                 <div className={styles.postTags} key={tag.node.id}>
                   <Link href={`/tag/${tag.node.slug}`}>
                     <a>{tag.node.name}</a>
                   </Link>
-                </div>,
-                " . ",
+                </div>
               ];
             })}
         </div>
