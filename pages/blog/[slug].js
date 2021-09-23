@@ -45,18 +45,21 @@ const Post = ({ post, menus } = props) => {
             loading="lazy"
           />
         )}
-        {categories.edges &&
-          categories.edges.map((cat) => {
-            return (
-              <div key={cat.node.id}>
-                <Link href={`/category/${cat.node.slug}`}>
-                  <a>
-                    <div>{cat.node.name}</div>
-                  </a>
-                </Link>
-              </div>
-            );
-          })}
+        <div className={styles.categoryContainer}>
+          {categories.edges &&
+            categories.edges.map((cat) => {
+              return [
+                <div className={styles.postCategories} key={cat.node.id}>
+                  <Link href={`/category/${cat.node.slug}`}>
+                    <a>
+                      <div>{cat.node.name}</div>
+                    </a>
+                  </Link>
+                </div>,
+                " . ",
+              ];
+            })}
+        </div>
         <div dangerouslySetInnerHTML={{ __html: content }} />
         <div className={styles.tagsContainer}>
           <div className={styles.tagsHead}>الوسوم: </div>
@@ -65,12 +68,10 @@ const Post = ({ post, menus } = props) => {
               return [
                 <div className={styles.postTags} key={tag.node.id}>
                   <Link href={`/tag/${tag.node.slug}`}>
-                    <a>
-                      {tag.node.name}
-                    </a>
+                    <a>{tag.node.name}</a>
                   </Link>
                 </div>,
-              " . "
+                " . ",
               ];
             })}
         </div>
