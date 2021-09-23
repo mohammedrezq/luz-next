@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .postPagination {
   display: block;
   margin-bottom: 1.5rem;
@@ -7,24 +9,60 @@
     display: block;
     border: 1px solid #858585;
     padding: 2rem;
-    &:hover, &.active  {
+    &:hover,
+    &.active {
       border: 1px solid #000;
       background-color: #f5e839;
       color: #000;
+    }
+
+    .previousHead {
+      font-weight: 700;
     }
   }
   .next {
     display: block;
     border: 1px solid #858585;
     padding: 2rem;
-    &:hover, &.active  {
+    &:hover,
+    &.active {
       border: 1px solid #000;
       background-color: #f5e839;
       color: #000;
     }
+
+    .nextHead {
+      font-weight: 700;
+    }
   }
 }
 
+.blogPostContent {
+  .tagsContainer {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    
+    .tagsHead {
+      margin-left: 4px;
+      font-weight: 700;
+    }
+    
+    .postTags {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 3px;
+      font-weight: 400;
+
+      a {
+        &:hover {
+          color: lighten($dark, 30%);
+        } 
+      }
+    }
+  }
+}
 @media screen and(min-width: 768px) {
   .postPagination {
     display: flex;
@@ -47,7 +85,8 @@
         }
       }
 
-      &:hover, &.active {
+      &:hover,
+      &.active {
         border: 1px solid #000;
         background-color: #f5e839;
         color: #000;
@@ -67,7 +106,8 @@
         }
       }
 
-      &:hover, &.active  {
+      &:hover,
+      &.active {
         border: 1px solid #000;
         background-color: #f5e839;
         color: #000;

@@ -11,6 +11,7 @@ import styles from "./blog.module.scss";
 import { flatListToHierarchical } from "../../lib/utils/menus";
 import { getPrimaryMenu } from "../../lib/api/getMenus";
 import Layout from "../../components/Layout";
+import { style } from "dom-helpers";
 
 let $hierarchicalList = [];
 
@@ -31,7 +32,7 @@ const Post = ({ post, menus } = props) => {
         title={`${title} - موقع لوز`}
         description="A short description goes here."
       />
-      <div>
+      <div className={styles.blogPostContent}>
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         {featuredImage && (
           <Image
@@ -57,26 +58,29 @@ const Post = ({ post, menus } = props) => {
             );
           })}
         <div dangerouslySetInnerHTML={{ __html: content }} />
-        <h1>الوسوم</h1>
-        {tags.edges &&
-          tags.edges.map((tag) => {
-            return (
-              <div key={tag.node.id}>
-                <Link href={`/tag/${tag.node.slug}`}>
-                  <a>
-                    <div>{tag.node.name}</div>
-                  </a>
-                </Link>
-              </div>
-            );
-          })}
+        <div className={styles.tagsContainer}>
+          <div className={styles.tagsHead}>الوسوم: </div>
+          {tags.edges &&
+            tags.edges.map((tag, index) => {
+              return [
+                <div className={styles.postTags} key={tag.node.id}>
+                  <Link href={`/tag/${tag.node.slug}`}>
+                    <a>
+                      {tag.node.name}
+                    </a>
+                  </Link>
+                </div>,
+              " . "
+              ];
+            })}
+        </div>
       </div>
       <div className={styles.postPagination}>
         {next ? (
           <>
             <Link href={`/blog/${next.slug}`}>
               <a className={styles.next}>
-                <span>السابق: </span>
+                <span className={styles.nextHead}>السابق: </span>
                 <div className={styles.nextUrl}>
                   <span className={styles.nextIcon}>&#8594;</span>
                   <span className={styles.nextTitle}>{next.title}</span>
@@ -89,7 +93,7 @@ const Post = ({ post, menus } = props) => {
           <>
             <Link href={`/blog/${previous.slug}`}>
               <a className={styles.previous}>
-                <span>التالي: </span>
+                <span className={styles.previousHead}>التالي: </span>
                 <div className={styles.previousUrl}>
                   <span className={styles.previousTitle}>{previous.title}</span>
                   <span className={styles.previousIcon}>&#8592;</span>{" "}

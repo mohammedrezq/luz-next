@@ -110,8 +110,8 @@ const Blog2 = ({ menus } = porps) => {
                         <div key={category.node.id}>
                           <Link href={`/category/${category.node.slug}`}>
                           <a>
+                          {/* {(index ? ', ': '') + category.node.name} */}
                           {category.node.name}
-
                           </a>
                           </Link>
                         </div>
