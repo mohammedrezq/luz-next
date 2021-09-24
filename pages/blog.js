@@ -67,7 +67,7 @@ const Blog2 = ({ menus } = porps) => {
     return <p>No posts have been published.</p>;
   }
 
-  console.log(posts);
+  // console.log(posts);
 
   return (
     <Layout menus={$hierarchicalList}>

@@ -8,7 +8,7 @@ const SkeletonContent = () => {
   return (
     <div className={styles.skeletonGrid}>
       {SkeletonElements.map((item, index) => {
-        return <div key={index}>{item}</div>;
+        return <div className={styles.skeletonItem} key={index}>{item}</div>;
       })}
     </div>
   );
