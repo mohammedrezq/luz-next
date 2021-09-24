@@ -39,10 +39,11 @@ const search = () => {
         posts.length > 0 &&
         value.length > 2 &&
         posts.map((post, index) => {
+          /**https://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array */
           const i = -2;
           const splittedUrl = post.url.split("/");
-          const URLslug = splittedUrl.at(i);
-          // console.log(splittedUrl);
+          const URLslug = splittedUrl.slice(i)[0];
+          // console.log(URLslug);
           return (
             <div key={post.id}>
               <Link href={`/blog/${URLslug}`}>{post.title}</Link>
