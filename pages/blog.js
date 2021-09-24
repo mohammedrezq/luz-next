@@ -16,6 +16,8 @@ import { flatListToHierarchical } from "../lib/utils/menus";
 import PostsContainer from "../components/PostsContainer";
 import styles from "./blog.module.scss";
 import Layout from "../components/Layout";
+import SkeletonComponent from "../components/Skeleton/Skeleton";
+import SkeletonContent from "../components/SkeletonContent/SkeletonContent";
 
 const POSTS_PER_PAGE = 6;
 
@@ -77,9 +79,11 @@ const Blog2 = ({ menus } = porps) => {
         dataLength={posts.edges.length}
         next={fetchMorePosts}
         hasMore={haveMorePosts}
-        loader={<p>Loading...</p>}
+        loader={<div className={styles.skeletonGrid}><SkeletonContent /></div>}
         endMessage={null}
       >
+        <>
+        
         <PostsContainer>
           {posts.edges.map((post) => {
             const { featuredImage } = post.node;
@@ -136,6 +140,7 @@ const Blog2 = ({ menus } = porps) => {
             );
           })}
         </PostsContainer>
+        </>
       </InfiniteScroll>
     </Layout>
   );
