@@ -58,7 +58,7 @@ const search = () => {
     onSubmitHandler(value);
   }, [value]);
 
-  console.log(posts);
+  console.log(posts.edges);
 
   //   const onSubmitHandler = (e) => {
   //       e.preventDefault();
@@ -73,17 +73,18 @@ const search = () => {
       <button onClick={onSubmitHandler}>Submit</button>
       {/* </form> */}
       {/**Posts */}
-      {posts &&
-        posts.length > 0 &&
+      {posts.edges &&
+        posts.edges.length > 0 &&
         value.length > 2 &&
-        posts.map((post, index) => {
-          const i = -2;
-          const splittedUrl = post.url.split("/");
-          const URLslug = splittedUrl.at(i);
+        posts.edges.map((post, index) => {
+          console.log(post.node.title);
+          // const i = -2;
+          // const splittedUrl = post.url.split("/");
+          // const URLslug = splittedUrl.at(i);
           // console.log(splittedUrl);
           return (
-            <div key={post.id}>
-              <Link href={`/blog/${URLslug}`}>{post.title}</Link>
+            <div key={post.node.id}>
+              <Link href={`/blog/${post.node.slug}`}>{post.node.title}</Link>
             </div>
           );
         })}
