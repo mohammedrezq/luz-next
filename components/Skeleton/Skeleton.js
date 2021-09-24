@@ -4,7 +4,6 @@ import styles from "./Skeleton.module.scss";
 
 const SkeletonComponent = () => {
   return (
-    <div className={styles.skeletonConatiner}>
       <SkeletonTheme>
         <Skeleton height={300} />
         <div>
@@ -14,7 +13,6 @@ const SkeletonComponent = () => {
           <Skeleton height={20} count={3} />
         </p>
       </SkeletonTheme>
-    </div>
   );
 };
 

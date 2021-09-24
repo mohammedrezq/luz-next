@@ -79,11 +79,9 @@ const Blog2 = ({ menus } = porps) => {
         dataLength={posts.edges.length}
         next={fetchMorePosts}
         hasMore={haveMorePosts}
-        loader={<div className={styles.skeletonGrid}><SkeletonContent /></div>}
+        loader={<div><SkeletonContent /></div>}
         endMessage={null}
       >
-        <>
-        
         <PostsContainer>
           {posts.edges.map((post) => {
             const { featuredImage } = post.node;
@@ -140,7 +138,6 @@ const Blog2 = ({ menus } = porps) => {
             );
           })}
         </PostsContainer>
-        </>
       </InfiniteScroll>
     </Layout>
   );
