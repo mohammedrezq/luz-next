@@ -79,7 +79,7 @@ const Blog2 = ({ menus } = porps) => {
         dataLength={posts.edges.length}
         next={fetchMorePosts}
         hasMore={haveMorePosts}
-        loader={<div><SkeletonContent /></div>}
+        loader={<SkeletonContent />}
         endMessage={null}
       >
         <PostsContainer>
