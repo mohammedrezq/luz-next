@@ -16,6 +16,8 @@ import { flatListToHierarchical } from "../lib/utils/menus";
 import PostsContainer from "../components/PostsContainer";
 import styles from "./blog.module.scss";
 import Layout from "../components/Layout";
+import SkeletonComponent from "../components/Skeleton/Skeleton";
+import SkeletonContent from "../components/SkeletonContent/SkeletonContent";
 
 const POSTS_PER_PAGE = 6;
 
@@ -77,9 +79,11 @@ const Blog2 = ({ menus } = porps) => {
         dataLength={posts.edges.length}
         next={fetchMorePosts}
         hasMore={haveMorePosts}
-        loader={<p>Loading...</p>}
+        loader={<div className={styles.skeletonGrid}><SkeletonContent /></div>}
         endMessage={null}
       >
+        <>
+        
         <PostsContainer>
           {posts.edges.map((post) => {
             const { featuredImage } = post.node;
@@ -105,18 +109,17 @@ const Blog2 = ({ menus } = porps) => {
                 </div>
                 <div className={styles.blogPostGridContent}>
                   <div className={styles.blogPostCategories}>
-                    {post.node?.categories && post.node?.categories?.edges.map((category, index) => {
-                      return (
-                        <div key={category.node.id}>
-                          <Link href={`/category/${category.node.slug}`}>
-                          <a>
-                          {/* {(index ? ', ': '') + category.node.name} */}
-                          {category.node.name}
-                          </a>
-                          </Link>
-                        </div>
-                      )
-                    })}
+                    {post.node?.categories &&
+                      post.node?.categories?.edges.map((category, index) => {
+                        return [
+                            (index ? ' . ' : ' '),
+                          <div  className={styles.blogPostCategoriesItems} key={category.node.id}>
+                            <Link href={`/category/${category.node.slug}`}>
+                              <a>{category.node.name}</a>
+                            </Link>
+                          </div>,
+                        ];
+                      })}
                   </div>
                   <div className={styles.blogPostsDescription}>
                     <div className={styles.blogPostTitle}>
@@ -137,6 +140,7 @@ const Blog2 = ({ menus } = porps) => {
             );
           })}
         </PostsContainer>
+        </>
       </InfiniteScroll>
     </Layout>
   );

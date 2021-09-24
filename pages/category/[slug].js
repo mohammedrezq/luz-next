@@ -11,6 +11,7 @@ import PostsContainer from "../../components/PostsContainer";
 import Layout from "../../components/Layout";
 
 import styles from "../blog/blog.module.scss";
+import categoryStyles from "./category.module.scss";
 import { flatListToHierarchical } from "../../lib/utils/menus";
 
 let $hierarchicalList = [];
@@ -22,7 +23,6 @@ const Category = ({ category, menus } = props) => {
   $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
 
   //   console.log(posts);
-  //   console.log(category);
   return (
     <Layout menus={$hierarchicalList}>
       <NextSeo
@@ -31,7 +31,8 @@ const Category = ({ category, menus } = props) => {
           category.description ? category.description : category.name
         }`}
       />
-
+    <h1 className={categoryStyles.categoryHeader}>{category.name}</h1>
+    {category?.description &&<div className={categoryStyles.categoryDescription}>{category?.description}</div>}
       <PostsContainer>
         {posts.edges.map((post) => {
           const { featuredImage } = post.node;
