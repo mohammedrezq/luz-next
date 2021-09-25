@@ -52,6 +52,11 @@
     margin-left: -2rem;
     margin-right: -2rem;
   }
+
+  .searchContainer {
+    cursor: pointer;
+    z-index: 1000;
+  }
   // /* Desktop Menu*/
 
   // .navMenu {
@@ -169,6 +174,7 @@
 
   .searchContainer {
     cursor: pointer;
+    z-index: 1000;
 
     .searchComponent {
       max-width: 100%;
