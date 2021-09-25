@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, forwardRef } from "react";
 import Link from "next/link";
 import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
 
 import { LIST_MENU_ITEM_PRIMARY } from "../../lib/api/getMenus";
 import { initializeApollo } from "../../services/apollo";
@@ -8,9 +9,32 @@ import { initializeApollo } from "../../services/apollo";
 import styles from "./Header.module.scss";
 import Nav from "../Nav";
 import NavMobile from "../NavMobile";
-import {SearchREST, SearchGraphQL} from "../Search";
+import { SearchREST, SearchGraphQL } from "../Search";
 
 const Header = (props) => {
+  const [search, setSearch] = useState(false);
+
+  const searchRef = useRef(null);
+
+  const useOutsideElem = (ref) => {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        console.log(ref.current);
+        if (ref.current && !ref.current.contains(event.target)) {
+          // console.log("Outside Div Element");
+          setSearch(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  };
+
+  useOutsideElem(searchRef);
+
   // const [subMenu, setSubMenu] = useState(false);
   // const [activeIndex, setActiveIndex] = useState(null);
   // const subMenuRef = useRef(null);
@@ -40,14 +64,28 @@ const Header = (props) => {
   //   };
   // }, [subMenu]);
 
+  const showSearch = (e) => {
+    e.preventDefault();
+    setSearch(!search);
+  };
+
   return (
     <div className={styles.header}>
       <NavMobile menus={props.menus} />
       <div className={styles.headerTitle}>
         <h1>موقع لوز</h1>
-        <SearchGraphQL />
       </div>
       <Nav menus={props.menus} />
+      <div className={styles.searchContainer} ref={searchRef}>
+        <div className={styles.searchIcon} onClick={showSearch}>
+          <BsSearch size={32} />
+        </div>
+        {search && (
+          <div className={styles.searchComponent}>
+            <SearchGraphQL />
+          </div>
+        )}
+      </div>
       {/* <ul className={styles.navMenu}>
         {props.menus.map((menu, index) => {
           const siteSubFolder = "newsite";

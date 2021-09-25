@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { BsSearch } from "react-icons/bs";
 
 import { fetchAPI } from "../../lib/utils/fetchAPI";
 import styles from "./Search.module.scss";
@@ -118,11 +119,11 @@ export const SearchGraphQL = () => {
   };
 
   return (
-    <div>
-      <input onClick={clickHandler} onChange={onChangeHandler} value={value} />
-      <button onClick={onSubmitHandler}>Submit</button>
+    <div className={styles.searchContainer}>
+      <input type="text" role="search" className={styles.searchBox} onClick={clickHandler} onChange={onChangeHandler} value={value} />
+      <button className={styles.searchSubmitBtn}><BsSearch size={32} color={"#ddd"}/></button>
       {/**Posts */}
-      {loadPosts && posts.edges.length > 0 && (
+      {loadPosts && posts.edges && posts.edges.length > 0 && (
         <div ref={divRef} className={styles.searchResultsContainer}>
           {posts.edges &&
             value.length > 2 &&
@@ -137,9 +138,10 @@ export const SearchGraphQL = () => {
             })}
         </div>
       )}
-      {loadPosts && posts.edges.length === 0 && (
+      {console.log("POSTS: ", posts.edges)}
+      {loadPosts && posts.edges && posts.edges.length === 0 && (
         <div className={styles.searchResultsContainer}>
-          No Results Found for: {value}
+          لا يوجد نتائج بحث لـ: {value}
         </div>
       )}
     </div>

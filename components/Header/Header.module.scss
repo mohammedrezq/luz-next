@@ -166,4 +166,18 @@
   .header {
     padding: 2rem 6rem;
   }
+
+  .searchContainer {
+    cursor: pointer;
+
+    .searchComponent {
+      max-width: 100%;
+    }
+  
+    .searchIcon{
+      // background-color: antiquewhite;
+      cursor: pointer;
+    }
+  }
+
 }
