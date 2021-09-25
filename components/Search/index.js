@@ -61,7 +61,7 @@ export const SearchGraphQL = () => {
   const useOutsideElem = (ref) => {
     useEffect(() => {
       function handleClickOutside(event) {
-        console.log(ref.current);
+        // console.log(ref.current);
         if (ref.current && !ref.current.contains(event.target)) {
           setLoadPosts(false);
         }
@@ -138,7 +138,7 @@ export const SearchGraphQL = () => {
             })}
         </div>
       )}
-      {console.log("POSTS: ", posts.edges)}
+      {/* {console.log("POSTS: ", posts.edges)} */}
       {loadPosts && posts.edges && posts.edges.length === 0 && (
         <div className={styles.searchResultsContainer}>
           لا يوجد نتائج بحث لـ: {value}

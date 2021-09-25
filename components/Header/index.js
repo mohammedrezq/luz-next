@@ -19,7 +19,6 @@ const Header = (props) => {
   const useOutsideElem = (ref) => {
     useEffect(() => {
       function handleClickOutside(event) {
-        console.log(ref.current);
         if (ref.current && !ref.current.contains(event.target)) {
           // console.log("Outside Div Element");
           setSearch(false);
