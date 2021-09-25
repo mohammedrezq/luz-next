@@ -32,7 +32,7 @@
 .searchResultsContainer {
   position: absolute;
   background: #fff;
-  padding: 8px 5px;
+//   padding: 8px 5px;
   z-index: 300;
   border: 2px solid;
   top: 63px;
@@ -40,7 +40,7 @@
 
   .searchResult {
     cursor: pointer;
-    padding: 4px 10px;
+    padding: 20px 10px;
 
     &:hover {
       background-color: $dark;

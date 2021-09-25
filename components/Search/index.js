@@ -138,7 +138,6 @@ export const SearchGraphQL = () => {
             })}
         </div>
       )}
-      {/* {console.log("POSTS: ", posts.edges)} */}
       {loadPosts && posts.edges && posts.edges.length === 0 && (
         <div className={styles.searchResultsContainer}>
           لا يوجد نتائج بحث لـ: {value}

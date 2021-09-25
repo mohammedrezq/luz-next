@@ -12,10 +12,11 @@ import { flatListToHierarchical } from "../../lib/utils/menus";
 import { getPrimaryMenu } from "../../lib/api/getMenus";
 import Layout from "../../components/Layout";
 import { style } from "dom-helpers";
+import { getSettings } from "../../lib/api/getSettings";
 
 let $hierarchicalList = [];
 
-const Post = ({ post, menus } = props) => {
+const Post = ({ post, menus, settings } = props) => {
   const { title } = post;
   const { featuredImage } = post;
   const { content } = post;
@@ -24,14 +25,18 @@ const Post = ({ post, menus } = props) => {
   const { tags } = post;
   const { categories } = post;
 
+  const {
+    data: { allSettings },
+  } = settings;
+
   $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
 
   return (
-    <Layout menus={$hierarchicalList}>
-      <NextSeo
-        title={`${title} - موقع لوز`}
-        description="A short description goes here."
-      />
+    <Layout
+      title={`${title} - ${allSettings.generalSettingsTitle}`}
+      description={title}
+      menus={$hierarchicalList}
+    >
       <div className={styles.blogPostContent}>
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         {featuredImage && (
@@ -49,29 +54,31 @@ const Post = ({ post, menus } = props) => {
           {categories.edges &&
             categories.edges.map((cat, index) => {
               return [
-                (index ? ' . ' : ' '),
+                index ? " . " : " ",
                 <div className={styles.postCategories} key={cat.node.id}>
                   <Link href={`/category/${cat.node.slug}`}>
                     <a>
                       <div>{cat.node.name}</div>
                     </a>
                   </Link>
-                </div>
+                </div>,
               ];
             })}
         </div>
         <div dangerouslySetInnerHTML={{ __html: content }} />
         <div className={styles.tagsContainer}>
-        {tags.edges.length > 0 &&<div className={styles.tagsHead}>الوسوم: </div>}
+          {tags.edges.length > 0 && (
+            <div className={styles.tagsHead}>الوسوم: </div>
+          )}
           {tags.edges &&
             tags.edges.map((tag, index) => {
               return [
-                (index ? ' . ' : ' '),
+                index ? " . " : " ",
                 <div className={styles.postTags} key={tag.node.id}>
                   <Link href={`/tag/${tag.node.slug}`}>
                     <a>{tag.node.name}</a>
                   </Link>
-                </div>
+                </div>,
               ];
             })}
         </div>
@@ -152,10 +159,15 @@ export async function getStaticProps(context) {
     query: getPrimaryMenu,
   });
 
+  const settings = await apolloClient.query({
+    query: getSettings,
+  });
+
   return {
     props: {
       post: data?.post,
       menus: menusData,
+      settings,
     },
     revalidate: 10,
   };

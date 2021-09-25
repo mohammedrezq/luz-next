@@ -22,11 +22,11 @@ const Tag = ({ tag, menus } = props) => {
   $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
 
   return (
-    <Layout menus={$hierarchicalList}>
-      <NextSeo
+    <Layout title={`الوسم: ${tag.name}`} description={`${tag.description ? tag.description : tag.name}`} menus={$hierarchicalList}>
+      {/* <NextSeo
         title={`${tag.name}`}
         description={`${tag.description ? tag.description : tag.name}`}
-      />
+      /> */}
 
       <h1>هذه المواضيع موسومة بـ"{tag.name}"</h1>
 

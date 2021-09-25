@@ -11,8 +11,8 @@ const Layout = (props) => {
   return (
     <>
       <NextSeo
-        title="Simple Usage Example"
-        description="A short description goes here."
+        title={props.title}
+        description={props.description}
       />
       <div className={styles.layout}>
         <Header menus={props.menus} />
