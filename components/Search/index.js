@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-const search = () => {
+
+import { fetchAPI } from "../../lib/utils/fetchAPI";
+import styles from "./Search.module.scss";
+
+// Rest API
+export const SearchREST = () => {
   const [value, setValue] = useState("");
   const [posts, setPosts] = useState([]);
 
@@ -20,20 +25,11 @@ const search = () => {
     onSubmitHandler();
   }, [value]);
 
-  console.log(posts);
-
-  //   const onSubmitHandler = (e) => {
-  //       e.preventDefault();
-  //       setValue(value)
-  //   }
-  //   console.log(value);
-
   return (
-    <div>
-      {/* <form action="" onSubmit={}> */}
+    <div className={styles.searchContainer}>
       <input onChange={onChangeHandler} value={value} />
       <button onClick={onSubmitHandler}>Submit</button>
-      {/* </form> */}
+
       {/**Posts */}
       {posts &&
         posts.length > 0 &&
@@ -43,7 +39,6 @@ const search = () => {
           const i = -2;
           const splittedUrl = post.url.split("/");
           const URLslug = splittedUrl.slice(i)[0];
-          // console.log(URLslug);
           return (
             <div key={post.id}>
               <Link href={`/blog/${URLslug}`}>{post.title}</Link>
@@ -54,4 +49,99 @@ const search = () => {
   );
 };
 
-export default search;
+// GraphQL
+export const SearchGraphQL = () => {
+  const [value, setValue] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [loadPosts, setLoadPosts] = useState(false);
+
+  const divRef = useRef(null);
+
+  const useOutsideElem = (ref) => {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        console.log(ref.current);
+        if (ref.current && !ref.current.contains(event.target)) {
+          setLoadPosts(false);
+        }
+      }
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }, [ref]);
+  };
+
+  useOutsideElem(divRef);
+
+  const onChangeHandler = (e) => {
+    e.preventDefault();
+    setValue(e.target.value);
+    if (e.target.value.length < 3) {
+      setLoadPosts(false);
+    } else {
+      setLoadPosts(true);
+    }
+  };
+  const onSubmitHandler = async (searchTerm) => {
+    let data = await fetchAPI(
+      `query($searchTerm: String) {
+        posts(where: { search: $searchTerm }) {
+          edges {
+            node {
+              id
+              uri
+              title
+              excerpt
+              slug
+            }
+          }
+        }
+      }`,
+      {
+        variables: {
+          searchTerm,
+        },
+      }
+    );
+    return setPosts(data?.posts);
+  };
+
+  useEffect(() => {
+    onSubmitHandler(value);
+  }, [value]);
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    setLoadPosts(!loadPosts);
+  };
+
+  return (
+    <div>
+      <input onClick={clickHandler} onChange={onChangeHandler} value={value} />
+      <button onClick={onSubmitHandler}>Submit</button>
+      {/**Posts */}
+      {loadPosts && posts.edges.length > 0 && (
+        <div ref={divRef} className={styles.searchResultsContainer}>
+          {posts.edges &&
+            value.length > 2 &&
+            posts.edges.map((post, index) => {
+              return (
+                <Link key={post.node.id} href={`/blog/${post.node.slug}`}>
+                  <div className={styles.searchResult} key={post.node.id}>
+                    {post.node.title}
+                  </div>
+                </Link>
+              );
+            })}
+        </div>
+      )}
+      {loadPosts && posts.edges.length === 0 && (
+        <div className={styles.searchResultsContainer}>
+          No Results Found for: {value}
+        </div>
+      )}
+    </div>
+  );
+};

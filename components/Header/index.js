@@ -8,7 +8,7 @@ import { initializeApollo } from "../../services/apollo";
 import styles from "./Header.module.scss";
 import Nav from "../Nav";
 import NavMobile from "../NavMobile";
-import Search from "../Search";
+import {SearchREST, SearchGraphQL} from "../Search";
 
 const Header = (props) => {
   // const [subMenu, setSubMenu] = useState(false);
@@ -45,7 +45,7 @@ const Header = (props) => {
       <NavMobile menus={props.menus} />
       <div className={styles.headerTitle}>
         <h1>موقع لوز</h1>
-        <Search />
+        <SearchGraphQL />
       </div>
       <Nav menus={props.menus} />
       {/* <ul className={styles.navMenu}>

@@ -1,0 +1,22 @@
+@import '../../styles/variables';
+
+// .searchContainer {
+    
+// }
+.searchResultsContainer {
+    position: absolute;
+    background: #fff;
+    padding: 8px 5px;
+    z-index: 300;
+    border: 2px solid;
+
+    .searchResult {
+        cursor: pointer;
+        padding: 4px 10px;
+
+        &:hover {
+            background-color: $dark;
+            color: $light;
+        }
+    }
+}
