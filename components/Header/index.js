@@ -69,7 +69,7 @@ const Header = (props) => {
   };
 
   return (
-    <div className={styles.header}>
+    <div style={{marginBottom: search && '80px', transition: 'all 200ms ease-out' }} className={styles.header}>
       <NavMobile menus={props.menus} />
       <div className={styles.headerTitle}>
         <h1>موقع لوز</h1>
