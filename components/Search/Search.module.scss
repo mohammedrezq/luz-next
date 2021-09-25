@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+
+.searchContainer {
+  position: absolute;
+  top: 110px;
+  left: 20%;
+  left: 0;
+  min-width: 100%;
+  padding: 0 80px;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .searchBox {
+    width: 100%;
+    z-index: 10000;
+    background-color: #f1f1f1;
+    border: none;
+    height: 60px;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  .searchSubmitBtn {
+    border: none;
+    cursor: pointer;
+  }
+}
+.searchResultsContainer {
+  position: absolute;
+  background: #fff;
+  padding: 8px 5px;
+  z-index: 300;
+  border: 2px solid;
+  top: 63px;
+  width: 90%;
+
+  .searchResult {
+    cursor: pointer;
+    padding: 4px 10px;
+
+    &:hover {
+      background-color: $dark;
+      color: $light;
+    }
+  }
+}
