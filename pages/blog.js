@@ -18,14 +18,18 @@ import styles from "./blog.module.scss";
 import Layout from "../components/Layout";
 import SkeletonComponent from "../components/Skeleton/Skeleton";
 import SkeletonContent from "../components/SkeletonContent/SkeletonContent";
+import { getSettings } from "../lib/api/getSettings";
 
 const POSTS_PER_PAGE = 6;
 
 let $hierarchicalList = [];
 
-const Blog2 = ({ menus } = porps) => {
-  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
+const Blog2 = ({ menus, settings } = porps) => {
+  const {
+    data: { allSettings },
+  } = settings;
 
+  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
     variables: {
       first: POSTS_PER_PAGE,
@@ -67,14 +71,13 @@ const Blog2 = ({ menus } = porps) => {
     return <p>No posts have been published.</p>;
   }
 
-  // console.log(posts);
 
   return (
-    <Layout menus={$hierarchicalList}>
-      <NextSeo
-        title={`المدونة - موقع لوز`}
-        description={`مدونة المواضيع المطروحة من موقع لوز!`}
-      />
+    <Layout
+      title={allSettings.generalSettingsTitle}
+      description={allSettings.generalSettingsDescription}
+      menus={$hierarchicalList}
+    >
       <InfiniteScroll
         dataLength={posts.edges.length}
         next={fetchMorePosts}
@@ -110,8 +113,11 @@ const Blog2 = ({ menus } = porps) => {
                     {post.node?.categories &&
                       post.node?.categories?.edges.map((category, index) => {
                         return [
-                            (index ? ' . ' : ' '),
-                          <div  className={styles.blogPostCategoriesItems} key={category.node.id}>
+                          index ? " . " : " ",
+                          <div
+                            className={styles.blogPostCategoriesItems}
+                            key={category.node.id}
+                          >
                             <Link href={`/category/${category.node.slug}`}>
                               <a>{category.node.name}</a>
                             </Link>
@@ -160,9 +166,14 @@ export async function getStaticProps(context) {
     query: getPrimaryMenu,
   });
 
+  const settings = await apolloClient.query({
+    query: getSettings,
+  });
+
   return addApolloState(apolloClient, {
     props: {
       menus: data,
+      settings,
     },
     revalidate: 10,
   });

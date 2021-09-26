@@ -24,13 +24,11 @@ const Category = ({ category, menus } = props) => {
 
   //   console.log(posts);
   return (
-    <Layout menus={$hierarchicalList}>
-      <NextSeo
-        title={`${category.name}`}
-        description={`${
-          category.description ? category.description : category.name
-        }`}
-      />
+    <Layout  title={`${category.name}`}
+    description={`${
+      category.description ? category.description : category.name
+    }`} menus={$hierarchicalList}>
+      
     <h1 className={categoryStyles.categoryHeader}>{category.name}</h1>
     {category?.description &&<div className={categoryStyles.categoryDescription}>{category?.description}</div>}
       <PostsContainer>

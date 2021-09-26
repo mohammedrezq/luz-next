@@ -120,7 +120,7 @@ export const SearchGraphQL = () => {
 
   return (
     <div className={styles.searchContainer}>
-      <input type="text" role="search" className={styles.searchBox} onClick={clickHandler} onChange={onChangeHandler} value={value} />
+      <input autoFocus type="text" role="search" className={styles.searchBox} onClick={clickHandler} onChange={onChangeHandler} value={value} />
       <button className={styles.searchSubmitBtn}><BsSearch size={32} color={"#ddd"}/></button>
       {/**Posts */}
       {loadPosts && posts.edges && posts.edges.length > 0 && (
@@ -138,7 +138,6 @@ export const SearchGraphQL = () => {
             })}
         </div>
       )}
-      {/* {console.log("POSTS: ", posts.edges)} */}
       {loadPosts && posts.edges && posts.edges.length === 0 && (
         <div className={styles.searchResultsContainer}>
           لا يوجد نتائج بحث لـ: {value}
