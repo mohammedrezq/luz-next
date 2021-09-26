@@ -65,7 +65,7 @@ const Post = ({ post, menus, settings } = props) => {
               ];
             })}
         </div>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div className={styles.blogPostEditorContent} dangerouslySetInnerHTML={{ __html: content }} />
         <div className={styles.tagsContainer}>
           {tags.edges.length > 0 && (
             <div className={styles.tagsHead}>الوسوم: </div>
