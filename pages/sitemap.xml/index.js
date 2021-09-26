@@ -1,5 +1,6 @@
 import { fetchAPI } from "../../lib/utils/fetchAPI";
 
+// Reference : https://dev.to/emil_priver/sitemap-with-next-js-539
 const sitemapXML = (data) => {
   let latestPost = 0;
   let projectsXML = "";
