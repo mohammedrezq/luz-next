@@ -13,10 +13,12 @@ import { getPrimaryMenu } from "../../lib/api/getMenus";
 import Layout from "../../components/Layout";
 import { style } from "dom-helpers";
 import { getSettings } from "../../lib/api/getSettings";
+import { getPostsByCategoryId } from "../../lib/api/getPostsByCategoryId";
+import { getRelatedPosts } from "../../lib/utils/relatedPosts";
 
 let $hierarchicalList = [];
 
-const Post = ({ post, menus, settings } = props) => {
+const Post = ({ post, menus, settings, relatedPosts } = props) => {
   const { title } = post;
   const { featuredImage } = post;
   const { content } = post;
@@ -65,7 +67,10 @@ const Post = ({ post, menus, settings } = props) => {
               ];
             })}
         </div>
-        <div className={styles.blogPostEditorContent} dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          className={styles.blogPostEditorContent}
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
         <div className={styles.tagsContainer}>
           {tags.edges.length > 0 && (
             <div className={styles.tagsHead}>الوسوم: </div>
@@ -82,6 +87,20 @@ const Post = ({ post, menus, settings } = props) => {
               ];
             })}
         </div>
+      </div>
+      <div className={styles.relatedPosts}>
+        {relatedPosts.posts.length > 0 &&
+          relatedPosts.posts.map((post, index) => {
+            return (
+              <div key={post.databaseId}>
+                <h3>
+                  <Link href={`/blog/${post.slug}`}>
+                    <a>{post.title}</a>
+                  </Link>
+                </h3>
+              </div>
+            );
+          })}
       </div>
       <div className={styles.postPagination}>
         {next ? (
@@ -155,6 +174,10 @@ export async function getStaticProps(context) {
     },
   });
 
+  const category =
+    data.post.categories.edges.length > 0 && data.post.categories.edges[0];
+  const postId = data.post.databaseId;
+
   const menusData = await apolloClient.query({
     query: getPrimaryMenu,
   });
@@ -168,6 +191,9 @@ export async function getStaticProps(context) {
       post: data?.post,
       menus: menusData,
       settings,
+      relatedPosts: {
+        posts: await getRelatedPosts(category, postId),
+      },
     },
     revalidate: 10,
   };
