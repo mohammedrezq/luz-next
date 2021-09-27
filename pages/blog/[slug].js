@@ -88,19 +88,40 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
             })}
         </div>
       </div>
-      <div className={styles.relatedPosts}>
-        {relatedPosts.posts.length > 0 &&
-          relatedPosts.posts.map((post, index) => {
-            return (
-              <div key={post.databaseId}>
-                <h3>
-                  <Link href={`/blog/${post.slug}`}>
-                    <a>{post.title}</a>
-                  </Link>
-                </h3>
-              </div>
-            );
-          })}
+      <div className={styles.relatedPostsSection}>
+        {relatedPosts.posts.length > 0 && (
+          <>
+            <h1>
+              مواضيع ذات صلة بـ:{" "}
+              <span dangerouslySetInnerHTML={{ __html: title }} />{" "}
+            </h1>
+            <div className={styles.relatedPostsContainer}>
+              {relatedPosts.posts.map((post, index) => {
+                return (
+                  <div className={styles.relatedPost} key={post.databaseId}>
+                    <Link href={`/blog/${post.slug}`}>
+                      <a>
+                        <div className={styles.relatedPostImage}>
+                          <Image
+                            width="350"
+                            height="250"
+                            layout="responsive"
+                            src={post?.featuredImage?.node?.sourceUrl}
+                            blurDataURL={`/_next/image?url=${post?.featuredImage?.node?.sourceUrl}&w=16&q=1`}
+                            placeholder="blur"
+                            loading="lazy"
+                          />
+                        </div>
+                        <h3 className={styles.relatedPostTitle}></h3>
+                        {post.title}
+                      </a>
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
       <div className={styles.postPagination}>
         {next ? (
