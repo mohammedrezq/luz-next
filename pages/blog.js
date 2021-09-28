@@ -29,7 +29,7 @@ const Blog2 = ({ menus, settings } = porps) => {
     data: { allSettings },
   } = settings;
 
-  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus?.menu?.menuItems?.nodes);
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
     variables: {
       first: POSTS_PER_PAGE,
@@ -76,6 +76,9 @@ const Blog2 = ({ menus, settings } = porps) => {
     <Layout
       title={allSettings.generalSettingsTitle}
       description={allSettings.generalSettingsDescription}
+      sitename={allSettings.generalSettingsTitle}
+      url={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/blog`}
+      type={`website`}
       menus={$hierarchicalList}
     >
       <InfiniteScroll
@@ -96,6 +99,7 @@ const Blog2 = ({ menus, settings } = porps) => {
                     <a>
                       {featuredImage && (
                         <Image
+                        alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${[post.node.title]}` }
                           width="350"
                           height="250"
                           layout="responsive"

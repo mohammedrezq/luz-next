@@ -89,6 +89,7 @@ export default function InfiniteScrollList() {
               <a>
                 {post?.featuredImage && (
                   <Image
+                    alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${title}` }
                     width="350"
                     height="250"
                     layout="responsive"

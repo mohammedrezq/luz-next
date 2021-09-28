@@ -52,7 +52,9 @@ const Dropdown = (props) => {
                         onClick={() => openSubMenuHandler(index)}
                         key={index}
                         className={styles.menuItemHasChildrenClosed}
+                        title="افتح القائمة - Open menu"
                       >
+                        <span aria-label="افتح القائمة - Open Menu" className={styles['sr-only']}>Open Menu - افتح القائمة</span>
                         <FaChevronDown />
                       </button>
                   </>
