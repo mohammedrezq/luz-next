@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["content.alyali.com"],
+    domains: [`${process.env.NEXT_PUBLIC_WORDPRESS_CONTENT_URL}`],
   },
 };
