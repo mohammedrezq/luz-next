@@ -195,3 +195,27 @@
     }
   }
 }
+
+/* Related Posts */
+
+.relatedPostsContainer {
+  // padding: 0 6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  grid-auto-rows: auto auto 300px;
+  margin-bottom: 10px;
+
+
+  .relatedPost {
+    border: 1px solid #ddd;
+
+    .relatedPostTitle {
+      margin: 6px;
+    }
+  }
+  
+  .relatedPostImage {
+    width: 100%;
+  }
+}
