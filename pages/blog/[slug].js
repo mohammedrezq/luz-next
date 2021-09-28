@@ -34,15 +34,27 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
   $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
 
   return (
+  //   <Layout
+  //   title={allSettings.generalSettingsTitle}
+  //   description={allSettings.generalSettingsDescription}
+  //   sitename={allSettings.generalSettingsTitle}
+  //   url={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/blog`}
+  //   type={`website`}
+  //   menus={$hierarchicalList}
+  // >
     <Layout
       title={`${title} - ${allSettings.generalSettingsTitle}`}
       description={title}
+      sitename={allSettings.generalSettingsTitle}
+      url={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/blog/${post.slug}`}
+      type={`article`}
       menus={$hierarchicalList}
     >
       <div className={styles.blogPostContent}>
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         {featuredImage && (
           <Image
+            alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${title}` }
             width="350"
             height="250"
             layout="responsive"
@@ -58,7 +70,7 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
               return [
                 index ? " . " : " ",
                 <div className={styles.postCategories} key={cat.node.id}>
-                  <Link href={`/category/${cat.node.slug}`}>
+                  <Link href={`/category/${cat.node.slug}`} passHref>
                     <a>
                       <div>{cat.node.name}</div>
                     </a>
@@ -80,7 +92,7 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
               return [
                 index ? " . " : " ",
                 <div className={styles.postTags} key={tag.node.id}>
-                  <Link href={`/tag/${tag.node.slug}`}>
+                  <Link href={`/tag/${tag.node.slug}`} passHref>
                     <a>{tag.node.name}</a>
                   </Link>
                 </div>,
@@ -91,18 +103,19 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
       <div className={styles.relatedPostsSection}>
         {relatedPosts.posts.length > 0 && (
           <>
-            <h1>
+            <h2>
               مواضيع ذات صلة بـ:{" "}
               <span dangerouslySetInnerHTML={{ __html: title }} />{" "}
-            </h1>
+            </h2>
             <div className={styles.relatedPostsContainer}>
               {relatedPosts.posts.map((post, index) => {
                 return (
                   <div className={styles.relatedPost} key={post.databaseId}>
-                    <Link href={`/blog/${post.slug}`}>
+                    <Link href={`/blog/${post.slug}`} passHref>
                       <a>
                         <div className={styles.relatedPostImage}>
                           <Image
+                            alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${post.title}` }
                             width="350"
                             height="250"
                             layout="responsive"

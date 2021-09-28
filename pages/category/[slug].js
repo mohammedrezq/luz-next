@@ -41,6 +41,7 @@ const Category = ({ category, menus } = props) => {
                 <a>
                   {featuredImage && (
                     <Image
+                      alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${post.node.title}` }
                       width="350"
                       height="250"
                       layout="responsive"
