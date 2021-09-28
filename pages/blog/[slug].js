@@ -31,7 +31,7 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
     data: { allSettings },
   } = settings;
 
-  $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus?.data?.menu?.menuItems?.nodes);
 
   return (
   //   <Layout
@@ -114,7 +114,7 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
                     <Link href={`/blog/${post.slug}`} passHref>
                       <a>
                         <div className={styles.relatedPostImage}>
-                          <Image
+                          {post?.featuredImage && <Image
                             alt={post?.featuredImage?.node?.altText ? post?.featuredImage?.node?.altText : `صورة ل${post.title}` }
                             width="350"
                             height="250"
@@ -123,7 +123,7 @@ const Post = ({ post, menus, settings, relatedPosts } = props) => {
                             blurDataURL={`/_next/image?url=${post?.featuredImage?.node?.sourceUrl}&w=16&q=1`}
                             placeholder="blur"
                             loading="lazy"
-                          />
+                          />}
                         </div>
                         <h3 className={styles.relatedPostTitle}></h3>
                         {post.title}

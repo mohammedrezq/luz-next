@@ -6,7 +6,7 @@ import { flatListToHierarchical } from "../lib/utils/menus";
 let $hierarchicalList = [];
 
 export default function Home({ menus } = porps) {
-  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus?.menu?.menuItems?.nodes);
   return (
     <Layout menus={$hierarchicalList}>
       <div>

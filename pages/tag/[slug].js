@@ -19,7 +19,7 @@ const Tag = ({ tag, menus } = props) => {
   //   console.log(posts);
   //   console.log(tag);
 
-  $hierarchicalList = flatListToHierarchical(menus.data.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus?.data?.menu?.menuItems?.nodes);
 
   return (
     <Layout title={`الوسم: ${tag.name}`} description={`${tag.description ? tag.description : tag.name}`} menus={$hierarchicalList}>

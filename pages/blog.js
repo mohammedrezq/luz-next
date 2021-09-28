@@ -29,7 +29,7 @@ const Blog2 = ({ menus, settings } = porps) => {
     data: { allSettings },
   } = settings;
 
-  $hierarchicalList = flatListToHierarchical(menus.menu.menuItems.nodes);
+  $hierarchicalList = flatListToHierarchical(menus?.menu?.menuItems?.nodes);
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
     variables: {
       first: POSTS_PER_PAGE,
